@@ -1,0 +1,303 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Clear();
+
+        bool sair = false;
+
+        while (!sair)
+        {
+            Console.WriteLine("Escolha qual Problema deseja solucionar:");
+            Console.WriteLine("1. Código 1");
+            Console.WriteLine("2. Código 2");
+            Console.WriteLine("3. Código 3");
+            Console.WriteLine("4. Código 4");
+            Console.WriteLine("5. Código 5");
+            Console.WriteLine("0. Sair");
+
+            int opcao = Convert.ToInt32(Console.ReadLine());
+
+            switch (opcao)
+            {
+                case 0:
+                    sair = true;
+                    break;
+                case 1:
+                    Codigo1.Executar();
+                    break;
+                case 2:
+                    Codigo2.Executar();
+                    break;
+                case 3:
+                    Codigo3.Executar();
+                    break;
+                case 4:
+                    Codigo4.Executar();
+                    break;
+                case 5:
+                    Codigo5.Executar();
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida!");
+                    break;
+            }
+
+            Console.WriteLine("Pressione qualquer tecla para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+    }
+
+
+    public class Codigo1
+    {
+        public static void Executar()
+        {
+            Console.Clear();
+
+            // le os valores
+            Console.Write("Informe o valor presente (p): ");
+            double p = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe a taxa de juros mensal em % (i): ");
+            double ip = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe o número de meses (n): ");
+            int n = int.Parse(Console.ReadLine());
+
+            // converte em %
+            double i = ip / 100;
+
+            // valor futuro
+            double F = p * Math.Pow(1 + i, n);
+
+            // resultado
+            Console.WriteLine($"O valor futuro do investimento é {F.ToString("F2")}");
+
+        }
+    }
+
+    public class Codigo2
+    {
+        public static void Executar()
+        {
+            Console.Clear();
+
+            // le os valores
+            Console.Write("Informe o valor presente (p): ");
+            double p = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe a taxa de juros mensal em % (i): ");
+            double ip = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe o número de meses (n): ");
+            int n = int.Parse(Console.ReadLine());
+
+            // converte em %
+            double i = ip / 100;
+
+            Console.Clear();
+
+            Console.WriteLine("Mês\tTaxa Juros\tRendimento\tRendimento Liquido");
+
+            double totalRendimentoLiquido = 0;
+
+            for (int a = 1; a <= n; a++)
+            {
+                // rendimento do mês
+                double rendimento = p * i;
+
+                // valor futuro
+                double valorFuturo = p + rendimento;
+
+                double rendimentoLiquido = valorFuturo - p;
+                totalRendimentoLiquido += rendimentoLiquido;
+                p = valorFuturo;
+
+                Console.WriteLine($"{a}\t{ip}%\t\t{valorFuturo.ToString("F2")}\t\t{totalRendimentoLiquido.ToString("F2")}");
+            }
+
+        }
+    }
+
+    public class Codigo3
+    {
+        public static void Executar()
+        {
+            Console.Clear();
+
+            // le os valores
+            Console.Write("Informe o valor presente (p): ");
+            double p = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe a taxa de juros mensal em % (i): ");
+            double ip = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe o número de anos (n): ");
+            int n = int.Parse(Console.ReadLine());
+
+            // calculos
+            double i = ip / 100;
+            double F = p * Math.Pow(1 + i, n);
+
+            Console.WriteLine("Anos\tTaxa Juros\tRendimento");
+            Console.WriteLine($"{n}\t{ip}%\t\t{F.ToString("0.00")}");
+
+        }
+    }
+
+    public class Codigo4
+    {
+        public static void Executar()
+        {
+            Console.Clear();
+
+            // le os valores
+            Console.Write("Informe o valor presente (p): ");
+            double p = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe a taxa de juros mensal em % (i): ");
+            double ip = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe o número de meses (n): ");
+            int n = int.Parse(Console.ReadLine());
+
+            // converte em %
+            double i = ip / 100;
+
+            Console.Clear();
+
+            Console.WriteLine("Mês\tValor Presente\tTaxa Juros\tRendimento\tRendimento Líquido\tRenda Acumulada\tResgate\tSALDO");
+
+            double totalRendimentoLiquido = 0;
+
+            for (int a = 1; a <= n; a++)
+            {
+                // rendimento do mês
+                double rendimento = p * i;
+
+                // valor futuro
+                double valorFuturo = p + rendimento;
+
+                double rendimentoLiquido = valorFuturo - p;
+                totalRendimentoLiquido += rendimentoLiquido;
+
+                // Verifica se é o mês 5 para realizar o resgate
+                double resgate = (a == 5) ? 1000 : 0;
+
+                // Atualiza o saldo
+                double saldo = valorFuturo - resgate;
+
+                // Verifica se é o último mês para ajustar a renda acumulada
+                if (a == n)
+                {
+                    totalRendimentoLiquido = saldo - p;
+                }
+
+                Console.WriteLine($"{a}\t{p.ToString("F2")}\t\t{ip}%\t{valorFuturo.ToString("F2")}\t\t{rendimentoLiquido.ToString("F2")}\t\t{totalRendimentoLiquido.ToString("F2")}\t\t{resgate}\t{saldo.ToString("F2")}");
+
+                p = saldo;
+            }
+        }
+    }
+
+    public class Codigo5
+    {
+        public static void Executar()
+        {
+            Console.Clear();
+
+            // lógica do código 5
+            Console.WriteLine("Executando Código 5...");
+
+            // Coloque aqui o código que você forneceu:
+            MostrarTelaInicial();
+
+            Console.ReadKey();
+        }
+
+        static void MostrarTelaInicial()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Selecione uma opção:");
+            Console.WriteLine("1. Calcular Valor Presente");
+            Console.WriteLine("2. Calcular Taxa de Juros");
+            Console.WriteLine("3. Voltar para Tela Inicial");
+
+            Console.Write("Opção: ");
+            string opcao = Console.ReadLine();
+
+            if (opcao == "1")
+            {
+                CalcularValorPresente();
+            }
+            else if (opcao == "2")
+            {
+                CalcularTaxaJuros();
+            }
+            else if (opcao == "3")
+            {
+                Main();
+            }
+            else
+            {
+                Console.WriteLine("Opção inválida. Por favor, execute o programa novamente e selecione uma opção válida.");
+            }
+        }
+
+        static void CalcularValorPresente()
+        {
+            Console.Clear();
+
+            Console.Write("Digite o valor futuro: ");
+            double valorFuturo = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Digite o período de tempo (em anos): ");
+            double periodo = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Digite a taxa de juros (em porcentagem): ");
+            double taxaJurosPorcentagem = Convert.ToDouble(Console.ReadLine());
+
+            double taxaJuros = taxaJurosPorcentagem / 100;
+            double valorPresente = valorFuturo / Math.Pow(1 + taxaJuros, periodo);
+
+            Console.WriteLine("O valor presente necessário é: " + valorPresente.ToString("F2"));
+
+            VoltarParaTelaInicial();
+        }
+
+        static void CalcularTaxaJuros()
+        {
+            Console.Clear();
+
+            Console.Write("Digite o valor presente: ");
+            double valorPresente = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Digite o valor futuro: ");
+            double valorFuturo = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Digite o período de tempo (em anos): ");
+            double periodo = Convert.ToDouble(Console.ReadLine());
+
+            double taxaJuros = Math.Pow(valorFuturo / valorPresente, 1 / periodo) - 1;
+            double taxaJurosPorcentagem = taxaJuros * 100;
+
+            Console.WriteLine("A taxa de juros necessária é: " + taxaJurosPorcentagem.ToString("F2") + "%");
+
+            VoltarParaTelaInicial();
+        }
+
+        static void VoltarParaTelaInicial()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pressione qualquer tecla para voltar à tela inicial...");
+            Console.ReadKey();
+
+            MostrarTelaInicial();
+        }
+    }
+}
