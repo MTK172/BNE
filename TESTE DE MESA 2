@@ -210,10 +210,6 @@ class Program
         {
             Console.Clear();
 
-            // lógica do código 5
-            Console.WriteLine("Executando Código 5...");
-
-            // Coloque aqui o código que você forneceu:
             MostrarTelaInicial();
 
             Console.ReadKey();
