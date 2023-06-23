@@ -1,0 +1,37 @@
+using System;
+
+    public class Program
+    {
+        static void Main()
+        {
+            // le os valores
+            Console.Write("Informe o valor presente (p): ");
+            double p = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe a taxa de juros mensal em % (i): ");
+            double ip = double.Parse(Console.ReadLine());
+
+            Console.Write("Informe o número de meses (n): ");
+            int n = int.Parse(Console.ReadLine());
+
+            Console.Write("Informe o número de dias (d): ");
+            int d = int.Parse(Console.ReadLine());
+
+            // converte em %
+            double i = ip / 100;
+
+            // converte os dias em fração do mês
+            double fracaoDoMes = (double)d / 30;
+
+            // calcula o total de meses considerando os dias
+            double totalMeses = n + fracaoDoMes;
+
+            // valor futuro
+            double F = p * Math.Pow(1 + i, totalMeses);
+
+            // resultado
+            Console.WriteLine($"O valor futuro do investimento é {F.ToString("F2")}");
+
+            Console.ReadKey();
+        }
+    }
