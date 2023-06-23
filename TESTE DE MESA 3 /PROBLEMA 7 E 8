@@ -1,0 +1,81 @@
+using System;
+
+public class Investimento
+{
+    private decimal valorPresente;
+    private decimal taxaJurosMensal;
+    private int numeroMeses;
+    private int numeroDias;
+    private decimal fracaoAno;
+    private decimal totalRendimentoLiquido;
+
+    public Investimento(decimal valorPresente, decimal taxaJurosMensal, int numeroMeses, int numeroDias, decimal fracaoAno)
+    {
+        this.valorPresente = valorPresente;
+        this.taxaJurosMensal = taxaJurosMensal;
+        this.numeroMeses = numeroMeses;
+        this.numeroDias = numeroDias;
+        this.fracaoAno = fracaoAno;
+        this.totalRendimentoLiquido = 0;
+    }
+
+    public void CalcularInvestimento()
+    {
+        decimal i = taxaJurosMensal / 100;
+        decimal fracaoDoAno = (decimal)numeroDias / 365;
+        decimal totalMeses = numeroMeses + (fracaoDoAno * 12) + (fracaoAno * 10);
+
+        Console.Clear();
+        Console.WriteLine("Mês\tValor Presente\tTaxa Juros\tRendimento\tRendimento Líquido\tRenda Acumulada\tResgate\tSALDO");
+
+        decimal saldo = valorPresente;
+
+        for (int a = 1; a <= (int)totalMeses; a++)
+        {
+            decimal rendimento = saldo * i;
+            decimal valorFuturo = saldo + rendimento;
+            decimal rendimentoLiquido = valorFuturo - saldo;
+
+            totalRendimentoLiquido += rendimentoLiquido;
+
+            decimal resgate = (a == 5) ? 1000 : 0;
+
+            saldo = valorFuturo - resgate;
+
+            Console.WriteLine($"{a}\t{saldo.ToString("F2")}\t\t{taxaJurosMensal}%\t\t{valorFuturo.ToString("F2")}\t\t{rendimentoLiquido.ToString("F2")}\t\t\t{totalRendimentoLiquido.ToString("F2")}\t\t{resgate}\t{saldo.ToString("F2")}");
+
+            if (a == 8)
+            { 
+                decimal resultado = saldo * (decimal)Math.Pow(0.03 + 1, (double)(fracaoDoAno * 12));
+                rendimentoLiquido = resultado - saldo;
+                decimal rendaAcumulada = rendimentoLiquido + totalRendimentoLiquido;
+                Console.WriteLine($"10D\t{resultado.ToString("F2")}\t\t{taxaJurosMensal}%\t\t{resultado.ToString("F2")}\t\t{rendimentoLiquido.ToString("F2")}\t\t\t{rendaAcumulada.ToString("F2")}\t\t{resgate}\t{resultado.ToString("F2")}");
+            }
+        }
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("Informe o valor presente (p): ");
+        decimal p = decimal.Parse(Console.ReadLine());
+
+        Console.Write("Informe a taxa de juros mensal em % (i): ");
+        decimal ip = decimal.Parse(Console.ReadLine());
+
+        Console.Write("Informe o número de meses (n): ");
+        int n = int.Parse(Console.ReadLine());
+
+        Console.Write("Informe o número de dias (d): ");
+        int d = int.Parse(Console.ReadLine());
+
+        decimal fracaoAno = (decimal)d / 365;
+
+        Investimento investimento = new Investimento(p, ip, n, d, fracaoAno);
+        investimento.CalcularInvestimento();
+
+        Console.ReadKey();
+    }
+}
