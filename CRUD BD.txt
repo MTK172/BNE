@@ -1,0 +1,89 @@
+CREATE DATABASE CRUD
+
+USE CRUD
+
+
+CREATE TABLE Departamento(
+idDepartamento int primary key identity(1,1),
+nome varchar(50)
+)
+
+
+CREATE TABLE Empregado(
+idEmpregado int primary key identity(1,1),
+nomeCompleto varchar(50),
+idDepartamento int references Departamento(IdDepartamento),
+saldo int,
+fechaContrato date
+)
+
+insert into Departamento(nome) values
+('Administração'),
+('Marketing'),
+('Vendas'),
+('Comercio')
+
+insert into Empregado(nomeCompleto,idDepartamento,saldo,fechaContrato) values
+('Francisco Hernandez',1,1400,getdate())
+
+
+create procedure sp_ListaDepartamentos
+as
+begin
+	select idDepartamento,nome from Departamento
+end
+
+create procedure sp_ListaEmpregados
+as
+begin
+ 	set dateformat dmy
+
+	select e.idEmpregado,e.nomeCompleto, 
+	d.idDepartamento,d.nome,
+	e.saldo,
+	convert(char(10),e.fechaContrato,103) as 'fechaContrato'
+	from Empregado as e
+	inner join Departamento as d on e.idDepartamento = d.idDepartamento 
+end
+
+create procedure sp_GuardarEmpregado
+(
+@nomeCompleto varchar(50),
+@idDepartamento int,
+@saldo int,
+@fechaContrato varchar(10)
+)
+as
+begin
+	set dateformat dmy
+	insert into Empregado(nomeCompleto,idDepartamento,saldo,fechaContrato) values
+	(@nomeCompleto,@idDepartamento,@saldo,convert(date,@fechaContrato))
+end
+
+create procedure sp_EditarEmpregado
+(
+@idEmpregado int,
+@nomeCompleto varchar(50),
+@idDepartamento int,
+@saldo int,
+@fechaContrato varchar(10)
+)
+as
+begin
+	update Empregado set
+	nomeCompleto = @nomeCompleto,
+	idDepartamento = @idDepartamento,
+	saldo = @saldo,
+	fechaContrato = @fechaContrato
+	where idEmpregado = @idEmpregado
+end
+
+
+create procedure sp_EliminarEmpregado
+(
+@idEmpregado int
+)
+as
+begin
+	delete from Empregado where idEmpregado = @idEmpregado
+end
